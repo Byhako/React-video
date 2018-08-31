@@ -1,0 +1,57 @@
+.Header 
+  background: #061B3A
+  display: flex
+  align-items: center
+  width: 100%
+  height: 50px
+
+.Header nav 
+  flex: 1
+  align-self: stretch
+  display: flex
+  border: 2px solid #061B3A
+
+.Header nav ul 
+  display: grid
+  grid-template-columns: 120px 120px 120px 120px 180px
+  grid-column-gap: 10px
+  padding: 0
+  margin: 0
+  flex: 1
+
+#large
+  width: 180px
+
+.Header li
+  list-style: none
+  display: flex
+  justify-content: center
+  width: 116px
+
+
+.Header a 
+  color: #EEEEEC
+  display: flex
+  flex: 1
+  align-items: center
+  justify-content: center
+  text-decoration: none
+  transition: .2s
+  text-transform: uppercase
+  font-weight: bold
+  font-size: 14px
+
+#name
+  font-size: 30px
+  margin: auto 80px
+  font-weight: bold
+  color: #3175FA
+
+.Header a.is-selected 
+  color: #061B3A
+  background: white
+
+
+.Header a:hover
+  border-top: 3px solid #3175FA
+  
