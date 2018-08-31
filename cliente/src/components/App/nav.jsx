@@ -25,6 +25,11 @@ export default class Nav extends Component {
               </NavLink>
             </li>
             <li>
+              <NavLink to='/javascript' activeClassName='is-selected'>
+                javaScript
+              </NavLink>
+            </li>
+            <li>
               <NavLink to='/webCamera' activeClassName='is-selected'>
                 react-webcam
               </NavLink>

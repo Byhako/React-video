@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import Webcam from 'react-webcam'
+import persona from '../../images/persona.png'
 
 export default class extends Component {
-  state = { image: null }
+  state = { image: persona }
   
   setRef = webcam => this.webcam = webcam
 

@@ -15,7 +15,7 @@ export default (props) => {
     <div className="container2">
       
       <p className="descripcion2">
-        The web video player built from the ground up for an HTML5 world using React library.
+        El reproductor de video web construido desde cero para un mundo HTML5 utilizando la biblioteca React.
         ( <a href="https://video-react.js.org/" target="_blank">Video React</a> )
       </p>
 

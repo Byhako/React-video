@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import Camera, { FACING_MODES, IMAGE_TYPES } from 'react-html5-camera-photo'
 import 'react-html5-camera-photo/build/css/index.css'
+import persona from '../../images/persona.png'
 
 export default class App extends Component {
-  state = { image: null }
+  state = { image: persona }
 
   onTakePhoto (dataUri) {
     console.log('takePhoto')
