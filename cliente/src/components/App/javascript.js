@@ -8,41 +8,21 @@ export default class extends Component {
     this.video = React.createRef()
     this.canvas = React.createRef()
     this.photo = React.createRef()
+    this.takePhoto = React.createRef()
+    this.play = React.createRef()
+    this.stop = React.createRef()
     this.width = 320
     this.height = 0
     this.state = {}
-    this.camera = null
   }
 
   componentDidMount () {
     const video = this.video.current
     const canvas = this.canvas.current
     const photo = this.photo.current
-    //let self = this
-    navigator.getMedia = (navigator.getUserMedia ||
-                         navigator.webkitGetUserMedia ||
-                         navigator.mozGetUserMedia ||
-                         navigator.msGetUserMedia)
-
-    navigator.getMedia(
-      {
-        video: true,
-        audio: false
-      },
-      function (stream) {
-        //self.camera = stream
-        if (navigator.mozGetUserMedia) {
-          video.mozSrcObject = stream
-        } else {
-          const vendorURL = window.URL || window.webkitURL
-          video.src = vendorURL.createObjectURL(stream)
-        }
-        video.play()
-      },
-      function (err) {
-        console.log('An error occured! ' + err)
-      }
-    )
+    const btnPlay = this.play.current
+    const btnstop = this.stop.current
+    const btnTakePhoto= this.takePhoto.current
   }
 
   handleCanplay = () => {
@@ -64,20 +44,59 @@ export default class extends Component {
     photo.setAttribute('src', data)
   }
 
-  handleStopButton () {
-    const MediaStream = window.MediaStream
+  handlePlayButton = () => {
+    let self = this
+    navigator.getMedia = (navigator.getUserMedia ||
+                         navigator.webkitGetUserMedia ||
+                         navigator.mozGetUserMedia ||
+                         navigator.msGetUserMedia)
 
-    if (typeof MediaStream !== 'undefined' && !('stop' in MediaStream.prototype)) {
-      MediaStream.prototype.stop = function() {
-        this.getAudioTracks().forEach(function(track) {
-            track.stop();
-        })
-
-        this.getVideoTracks().forEach(function(track) {
-            track.stop()
-        })
+    navigator.getMedia(
+      {
+        video: true,
+        audio: false
+      },
+      function (stream) {
+        self.camera = stream.getTracks()
+        if (navigator.mozGetUserMedia) {
+          video.mozSrcObject = stream
+        } else {
+          const vendorURL = window.URL || window.webkitURL
+          video.src = vendorURL.createObjectURL(stream)
+        }
+        video.play()
+      },
+      function (err) {
+        console.log('An error occured! ' + err)
       }
-    }
+    )
+
+    const btnPlay = this.play.current
+    const btnStop = this.stop.current
+    const btnTakePhoto= this.takePhoto.current
+
+    btnTakePhoto.classList.add('active')
+    btnStop.classList.add('active')
+    btnPlay.classList.add('deactivate')
+    btnPlay.classList.remove('active')
+    btnTakePhoto.classList.remove('deactivate')
+    btnStop.classList.remove('deactivate')
+  }
+
+  handleStopButton = (ev) => {
+    this.camera.forEach(i => i.stop() )
+    video.pause()
+
+    const btnPlay = this.play.current
+    const btnStop = this.stop.current
+    const btnTakePhoto= this.takePhoto.current
+
+    btnTakePhoto.classList.add('deactivate')
+    btnStop.classList.add('deactivate')
+    btnPlay.classList.add('active')
+    btnPlay.classList.remove('deactivate')
+    btnTakePhoto.classList.remove('active')
+    btnStop.classList.remove('active')
   }
 
   render () {
@@ -95,8 +114,11 @@ export default class extends Component {
         
         <div id='contenedor'>
           <video id='video' ref={this.video} onCanPlay={this.handleCanplay} />
-          <button id='startbutton' onClick={this.handleTakePhoto} >Take photo</button>
-          <button id='stopbutton' onClick={this.handleStopButton} >Stop</button>
+          <div className="botonera">
+            <button ref={this.play} className='btn2 active' onClick={this.handlePlayButton} >Play</button>
+            <button ref={this.takePhoto} className='btn2 deactivate' onClick={this.handleTakePhoto} >Take photo</button>
+            <button ref={this.stop} className='btn2 deactivate' onClick={this.handleStopButton} >Stop</button>
+          </div>
           <canvas id='canvas' ref={this.canvas} />
           <img src={persona} id='photo' alt='photo' ref={this.photo} />
         </div>
